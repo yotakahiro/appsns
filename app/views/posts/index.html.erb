@@ -1,0 +1,30 @@
+<h1>Welcome　<%= current_user.name %>さん</h1>
+
+<h1>Posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= link_to post.title, post_path(post) %></td>
+        <td><%= post.body %></td>
+        <td><%= link_to post.user.name, user_path(post.user_id) %></td> 
+        <!-- 必ずしもモデル名を入れるわけではない。順番通りに振られたIDを元に結びつけていたので、USER_IDに指定し直した。USERの登録が消されてしまうとUSER_IDとIDにズレが生じ、正しくUSER_IDが指定されない。-->
+        <td><%= post.updated_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>
